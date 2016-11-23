@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <title>Tiger Oil - Card list</title>
+  </head>
+  <body>
+    <div>
+      <p> This is a list of the currently available cards.
+    </div>
+
+    <table>
+      <tr>
+        <th>Card Text</th>
+        <th>Card Author</th>
+        <th>Card Type</th>
+        <th>Card Age Rating</th>
+      </tr>
+    {% for card in cards%}
+      <tr>
+        <td>{{card.text}}</td>
+        <td>{{card.cardAuthor}}</tc>
+        <td>{{card.cardType}}</td>
+        <td>{% if card.adult %}Adult{% else %}Kid-Friendly{% endif %}</td>
+      </tr>
+    {% endfor %}
+    <table>
+  </body>
+</html>
