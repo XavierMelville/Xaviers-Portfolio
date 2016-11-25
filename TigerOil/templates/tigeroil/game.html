@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <title>Tiger Oil - Example Game</title>
+  </head>
+  <body>
+    <div>
+      <p> This is an example game of snake oil
+    </div>
+
+    <table>
+      <tr>
+        <th>Players Name</th>
+        <th>Player Points</th>
+      </tr>
+    {% for player in game.player_list%}
+      <tr>
+        <td>{{player.player_name}}</td>
+        <td>{{player.points}}</tc>
+      </tr>
+    {% endfor %}
+    <table>
+  </body>
+</html>
