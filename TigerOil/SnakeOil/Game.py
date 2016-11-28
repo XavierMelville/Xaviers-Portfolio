@@ -63,7 +63,7 @@ class Game:
                 self.give_players_cards()
 
         # let the customer pick the winner, then recycle all the cards
-        winner = self.player_list[self.current_customer.choose_winner(player_list)]
+        winner = self.player_list[self.current_customer.choose_winner(self.player_list)]
 
         # give the winner their points
         winner.win_round()
