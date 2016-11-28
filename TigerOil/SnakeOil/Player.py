@@ -49,15 +49,15 @@ class Player:
         choice = self.get_player_card_selection()
         return self.hand.pop(0)
 
+    # player won the round, add a point
+    def win_round(self):
+        self.points+=1
+
+# interactions with client
     # return the player's choice of card
-    def get_player_card_selection(self):
+    def get_player_card_selection(self, player_list):
         return 0; #Stubbed out. will later interface with interface logic
 
     # get the player's choice of winner for the round
     def choose_winner(self):
         return 0; # stubbed out
-
-    # player won the round, add a point
-    def win_round(self):
-        self.points+=1
-        print(self.points)

@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <title>Tiger Oil - Lobby</title>
+  </head>
+  <body>
+    <div>
+      <p> This is a list of ongoing games. Or create a new one!
+    </div>
+
+    <table>
+      <tr>
+        <th>Game Name</th>
+        <th>Amount of players</th>
+      </tr>
+    {% for game in games%}
+      <tr>
+        <td>{{game.game_name}}</td>
+        <td>{{len(game.players)}}</tc>
+      </tr>
+    {% endfor %}
+    <table>
+  </body>
+</html>

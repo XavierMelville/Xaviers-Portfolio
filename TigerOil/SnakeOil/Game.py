@@ -25,8 +25,14 @@ class Game:
 
         # create both decks and fill them with appropriate cards
         self.noun_deck = Deck(CONST_DECK_SIZE, "Noun")
-        self.customer_deck = Deck(CONST_DECK_SIZE, "Customer")
+        print('next noun card is %s' % self.noun_deck.next_card().text)
+        print('noun deck is of type %s' % self.noun_deck.card_type)
 
+        self.customer_deck = Deck(CONST_DECK_SIZE, "Customer")
+        print('next noun card is %s' % self.noun_deck.next_card().text)
+        print('noun deck is of type %s' % self.noun_deck.card_type)
+
+        print(self.noun_deck.cards is self.customer_deck.cards)
         # store the players and fill their hands
         self.player_list = player_list
         self.current_customer = player_list[0]
@@ -57,11 +63,12 @@ class Game:
                 self.give_players_cards()
 
         # let the customer pick the winner, then recycle all the cards
-        winner = self.player_list[self.current_customer.choose_winner()]
+        winner = self.player_list[self.current_customer.choose_winner(player_list)]
 
         # give the winner their points
         winner.win_round()
-        print('winrar')
+        print('winrar: %s as a %s bought a %s %s from %s who has %d points' % (self.current_customer.player_name, self.current_customer_card.text, winner.active_cards[0].text, winner.active_cards[1].text,winner.player_name,  winner.points))
+
         # recycle all the active cards from each player into the deck, and the customer card
         for player in self.player_list:
             self.noun_deck.discard_cards(player.discard_played_cards())

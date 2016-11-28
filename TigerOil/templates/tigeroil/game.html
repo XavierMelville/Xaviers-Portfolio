@@ -11,11 +11,21 @@
       <tr>
         <th>Players Name</th>
         <th>Player Points</th>
+        <th>Player Card 1</th>
+        <th>Player Card 2</th>
+        <th>Player Card 3</th>
+        <th>Player Card 4</th>
+        <th>Player Card 5</th>
       </tr>
     {% for player in game.player_list%}
       <tr>
         <td>{{player.player_name}}</td>
-        <td>{{player.points}}</tc>
+        <td>{{player.points}}</td>
+        <td>{{player.hand.0.text}}</td>
+        <td>{{player.hand.1.text}}</td>
+        <td>{{player.hand.2.text}}</td>
+        <td>{{player.hand.3.text}}</td>
+        <td>{{player.hand.4.text}}</tc>
       </tr>
     {% endfor %}
     <table>

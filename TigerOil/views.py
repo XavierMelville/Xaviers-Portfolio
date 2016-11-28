@@ -42,3 +42,10 @@ def game(request):
     print('Game successfully completed itself')
     # return the game object containing all the details of the game
     return render(request, 'tigeroil/game.html', {'game':game})
+
+# see a list of games to join
+def lobby(request):
+    # show a list of games
+
+    return render(request, 'tigeroil/lobby.html', {})
+    #

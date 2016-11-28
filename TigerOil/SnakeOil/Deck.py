@@ -1,5 +1,10 @@
 from Card import Card
 from random import shuffle
+
+# django specific implementation details. could probably be refactored into a separate class
+from ..models import NounCard
+from ..models import CustomerCard
+
 """
     This is a deck class for an implementation of snake oil
     This is where cards will be pulled from the database and stored for use by the Game class
@@ -26,7 +31,10 @@ class Deck(object):
     def __init__(self, maximum_deck_size, card_type):
         self.maximum_deck_size = maximum_deck_size
         self.card_type = card_type
+        self.discarded_cards = []
+        self.cards = []
         self.fill_deck()
+
 
     # fill the deck until it's the maximum size.
     def fill_deck(self):
@@ -36,10 +44,13 @@ class Deck(object):
             count += 1
             self.total_cards_count +=  1
 
-    # grab the next card from the deck
+
+
+    # grab the next card from the deck, after shuffling the discard pile if empty
     def next_card(self):
         if(len(self.cards)==0):
             self.shuffle_discard_pile()
+            print('shuffling %s deck' % card_type)
         return self.cards.pop()
 
     # send a card(s) to a discard pile
@@ -77,16 +88,7 @@ class Deck(object):
     def create_default_customer_card(self):
         return Card("Xavier", "Therapist", False, "Customer")
 
-# old implementation that included both decks in one deck class
-"""
-    # the list of noun and customer cards.
-    # when played, cards will be placed in the discard pile or 'used'
-    # to later be shuffled back into the deck
-    noun_cards = Card[]
-    used_noun_cards = Card[]
-
-    customer_cards = Card[]
-    used_customer_cards = Card[]
-
-    def __init__(self, cards_per_deck, ):
-"""
+    # django specific implementation, pulls cards directly from database
+    # SO for getting a random instance from the deck http://stackoverflow.com/questions/962619/how-to-pull-a-random-record-using-djangos-orm
+    def pull_noun_card(self):
+        return

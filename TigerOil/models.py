@@ -24,3 +24,14 @@ class CustomerCard(models.Model):
     cardType = models.CharField(max_length=50, default="Customer")
     def __str__(self):
         return self.text
+
+# a single player
+class Player(models.Model):
+    player_name = models.CharField(max_length=50, default="") #add constriant to be unique
+    #game = Game()
+
+# the database of ongoing games
+class Game(models.Model):
+    game_name = models.CharField(max_length=50) #add constraint to be unique
+    #time_created = models.Time()
+    #players = models.Player[]
