@@ -10,16 +10,14 @@ class Player:
     http://stackoverflow.com/questions/3653298/concatenating-two-lists-difference-between-and-extend
     """
 
-    player_name = "Unassigned Player Name"
-    points = 0
-    hand = []
-    active_cards = []
 
     # constructor that initializes only with player's name and sets points to 0
     # will likely need updating once game becomes properly online
     def __init__(self, player_name):
         self.player_name = player_name
-        points = 0
+        self.points = 0
+        self.hand = []
+        self.active_cards = []
 
     #get cards dealed from the deck
     def recieve_cards(self, cards):
@@ -56,8 +54,12 @@ class Player:
 # interactions with client
     # return the player's choice of card
     def get_player_card_selection(self):
-        return 0; #Stubbed out. will later interface with interface logic
+        return 0 #Stubbed out. will later interface with interface logic
 
     # get the player's choice of winner for the round
     def choose_winner(self, player_list):
-        return 0; # stubbed out
+        this_players_index = player_list.index(self)
+        if(this_players_index!=0):
+            return 0 # stubbed out
+        else:
+            return 1

@@ -2,16 +2,23 @@
 from Player import Player
 from Deck import Deck
 from Card import Card
+from enum import Enum
+
 CONST_DECK_SIZE = 200
 CONST_POINT_LIMIT = 5
 CONST_HAND_SIZE = 5
 CONST_CARDS_PLAYED_PER_TURN = 2
 
+class GameState(Enum):
+    DealingCards = 0
+    PlayersSelectingNounCards = 1
+    PlayerMakingPitch = 2
+    PlayerSelectingWinner = 3
+    RestartingRound = 4
+
 class Game:
     """ Contains the main business logic of the game
     including setting up players, dealing hands, and operating rounds
-
-    """
 
     player_list = []
     current_customer = Player
@@ -19,24 +26,29 @@ class Game:
     noun_deck = Deck
     customer_deck = Deck
 
+    """
+
     # the game constructor
     # fills out player hands, chooses first customer and begins round loop
     def __init__ (self, player_list):
 
+        # set the state to currently processing the game
+        self.game_state = GameState.DealingCards
+
         # create both decks and fill them with appropriate cards
         self.noun_deck = Deck(CONST_DECK_SIZE, "Noun")
-        print('next noun card is %s' % self.noun_deck.next_card().text)
-        print('noun deck is of type %s' % self.noun_deck.card_type)
+        #print('next noun card is %s' % self.noun_deck.next_card().text)
+        #print('noun deck is of type %s' % self.noun_deck.card_type)
 
         self.customer_deck = Deck(CONST_DECK_SIZE, "Customer")
-        print('next noun card is %s' % self.noun_deck.next_card().text)
-        print('noun deck is of type %s' % self.noun_deck.card_type)
+        #print('next noun card is %s' % self.noun_deck.next_card().text)
+        #print('noun deck is of type %s' % self.noun_deck.card_type)
 
-        print(self.noun_deck.cards is self.customer_deck.cards)
+
         # store the players and fill their hands
         self.player_list = player_list
-        self.current_customer = player_list[0]
         self.give_players_cards()
+
 
         while(self.victory_condition() != True):
             self.round()
@@ -46,6 +58,10 @@ class Game:
     # 'sellers' play two cards which starts a timer during which they can talk
     # when all sellers have made their pitch, the customer picks a seller, who gets a point
     def round(self):
+
+        # select the new customer, based on the position of the last customer (or set it to the first customer for turn 1)
+        self.determine_customer()
+
         # select a new customer card from the deck
         self.current_customer_card = self.customer_deck.next_card()
 
@@ -62,7 +78,7 @@ class Game:
                 # refill cards
                 self.give_players_cards()
 
-        # let the customer pick the winner, then recycle all the cards
+        # let the customer pick the winner
         winner = self.player_list[self.current_customer.choose_winner(self.player_list)]
 
         # give the winner their points
@@ -88,3 +104,15 @@ class Game:
                 return True
             else:
                 return False
+
+    # determine and select the player who will next play as the CustomerCard
+    # if this is the first round, the customer will be the first in the list
+    def determine_customer(self):
+        try:
+            old_customer_index = self.player_list.index(self.current_customer)
+            if(old_customer_index >= len(self.player_list)-1):
+                self.current_customer = self.player_list[0]
+            else:
+                self.current_customer = self.player_list[old_customer_index+1]
+        except AttributeError:
+            self.current_customer = self.player_list[0]

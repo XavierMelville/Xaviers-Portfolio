@@ -1,9 +1,13 @@
 from Card import Card
 from random import shuffle
 
+# to pick a random card
+from random import randint
+
 # django specific implementation details. could probably be refactored into a separate class
 from ..models import NounCard
 from ..models import CustomerCard
+from django.db.models.aggregates import Count
 
 """
     This is a deck class for an implementation of snake oil
@@ -69,9 +73,9 @@ class Deck(object):
     # currently stubbed out until database interface is implemented
     def create_card(self):
         if(self.card_type=="Noun"):
-            return self.create_default_noun_card()
+            return self.pull_noun_card()
         elif(self.card_type=="Customer"):
-            return self.create_default_customer_card()
+            return self.pull_customer_card()
         elif(self.card_type=="Unassigned Card Type"):
             raise ValueError("Deck's card type not assigned")
             return Card("Xavier", "Error", False, "Error")
@@ -88,7 +92,15 @@ class Deck(object):
     def create_default_customer_card(self):
         return Card("Xavier", "Therapist", False, "Customer")
 
-    # django specific implementation, pulls cards directly from database
+    # django specific implementation, pulls a cards directly from database
+    # does not account for duplicate cards
     # SO for getting a random instance from the deck http://stackoverflow.com/questions/962619/how-to-pull-a-random-record-using-djangos-orm
     def pull_noun_card(self):
-        return
+        count = NounCard.objects.aggregate(count=Count('id'))['count']
+        random_index = randint(0, count -1)
+        return NounCard.objects.all()[random_index]
+
+    def pull_customer_card(self):
+            count = CustomerCard.objects.aggregate(count=Count('id'))['count']
+            random_index = randint(0, count -1)
+            return CustomerCard.objects.all()[random_index]
